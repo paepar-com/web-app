@@ -14,7 +14,13 @@ from django.utils.html import strip_tags
 
 def get_sheet_tab(tab_name):
     try:
-        creds_path = os.path.join(settings.BASE_DIR, 'credentials.json')
+        # OLD LINE (Delete this):
+        # creds_path = os.path.join(settings.BASE_DIR, 'credentials.json')
+
+        # NEW LINE (Use this):
+        # This tells the app: "Look where the environment variable tells you to look"
+        creds_path = os.getenv('GOOGLE_CREDS_PATH')
+
         scope = ['https://spreadsheets.google.com/feeds',
                  'https://www.googleapis.com/auth/drive']
         creds = ServiceAccountCredentials.from_json_keyfile_name(
