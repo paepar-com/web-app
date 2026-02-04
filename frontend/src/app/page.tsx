@@ -5,121 +5,126 @@ import Link from 'next/link';
 
 export default function Home() {
   const [ticketId, setTicketId] = useState('');
-  const [status, setStatus] = useState<any>(null);
+  const [statusResult, setStatusResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
-  // Function to Check Status
+  // Clear result when input is empty
+  const handleInputChange = (e: any) => {
+    const val = e.target.value;
+    setTicketId(val);
+    if (val === '') setStatusResult(null); 
+  };
+
   const checkStatus = async () => {
     if (!ticketId) return;
     setLoading(true);
-    setStatus(null);
-
     try {
       const res = await fetch(`http://127.0.0.1:8000/api/orders/status/${ticketId}/`);
       const data = await res.json();
-      
-      if (res.ok) {
-        setStatus({ type: 'success', data: data });
-      } else {
-        setStatus({ type: 'error', message: 'Ticket not found. Please check your ID.' });
-      }
-    } catch (error) {
-      setStatus({ type: 'error', message: 'Connection error. Is the backend running?' });
+      if (res.ok) setStatusResult({ success: true, data });
+      else setStatusResult({ success: false, message: 'Ticket not found.' });
+    } catch {
+      setStatusResult({ success: false, message: 'Connection Error.' });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="min-h-screen max-w-md mx-auto bg-white shadow-xl overflow-hidden flex flex-col">
+    <main className="min-h-screen bg-gray-50 flex flex-col">
       
-      {/* Header */}
-      <header className="bg-blue-700 p-6 text-white pb-12 rounded-b-3xl shadow-lg relative z-10">
-        <h1 className="text-2xl font-bold tracking-tight">Paepar</h1>
-        <p className="text-blue-100 text-sm mt-1">Vehicle paperwork made simple.</p>
-      </header>
+      {/* 1. HERO SECTION (Desktop Friendly) */}
+      <div className="bg-blue-900 text-white py-16 px-6">
+        <div className="max-w-5xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Paepar</h1>
+          <p className="text-blue-100 text-lg max-w-2xl mx-auto">
+            The easiest way to process your Vehicle Papers, Driver's License, and Inspections in Nigeria.
+          </p>
+        </div>
+      </div>
 
-      {/* Tracker Section (Floating Card) */}
-      <div className="px-6 -mt-8 relative z-20">
-        <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
-          <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+      {/* 2. MAIN ACTIONS (The Split) */}
+      <div className="max-w-4xl mx-auto px-6 -mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 w-full mb-12">
+        
+        {/* CAR OWNER CARD */}
+        <Link href="/create" className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all border-b-4 border-blue-600 group">
+          <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">🚗</div>
+          <h2 className="text-2xl font-bold text-gray-900">Car Owner</h2>
+          <p className="text-gray-500 mt-2">I want to renew papers, apply for a license, or book an inspection.</p>
+          <div className="mt-6 text-blue-600 font-bold flex items-center">
+            Start Request <span className="ml-2">→</span>
+          </div>
+        </Link>
+
+        {/* AGENT CARD */}
+        <Link href="/agent" className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all border-b-4 border-green-600 group">
+          <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">🤝</div>
+          <h2 className="text-2xl font-bold text-gray-900">Agent Partner</h2>
+          <p className="text-gray-500 mt-2">I am a licensed agent and I want to offer my services on the platform.</p>
+          <div className="mt-6 text-green-600 font-bold flex items-center">
+            Join Network <span className="ml-2">→</span>
+          </div>
+        </Link>
+      </div>
+
+      {/* 3. TRACKER SECTION */}
+      <div className="max-w-md mx-auto w-full px-6 pb-20">
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+          <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
             Track Application
           </label>
-          <div className="flex gap-2">
+          <div className="flex gap-2 mb-4">
             <input 
-              type="text" 
-              placeholder="Enter Ticket ID (e.g., PADI-9X2A)"
-              className="flex-1 bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block p-3 outline-none transition-all"
+              className="flex-1 bg-gray-50 border border-gray-200 text-lg p-3 rounded-xl outline-none focus:border-blue-500 text-gray-900 placeholder:text-gray-400"
+              placeholder="Enter Ticket ID (PADI-...)"
               value={ticketId}
-              onChange={(e) => setTicketId(e.target.value)}
+              onChange={handleInputChange}
             />
-            <button 
-              onClick={checkStatus}
-              disabled={loading}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl px-4 py-2 transition-colors disabled:opacity-50"
-            >
+            <button onClick={checkStatus} disabled={loading} className="bg-gray-900 text-white px-6 rounded-xl font-bold">
               {loading ? '...' : 'Check'}
             </button>
           </div>
 
-          {/* Status Result Display */}
-          {status && (
-            <div className={`mt-4 p-4 rounded-xl text-sm ${status.type === 'success' ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-red-50 text-red-700 border border-red-100'}`}>
-              {status.type === 'success' ? (
-                <div>
-                  <p className="font-bold text-lg">{status.data.status}</p>
-                  <p className="text-xs opacity-80 mt-1">Service: {status.data.service_type}</p>
-                  <p className="text-xs opacity-80">Hello, {status.data.full_name}</p>
-                </div>
+          {/* STATUS DISPLAY (Timeline) */}
+          {statusResult && (
+            <div className={`rounded-xl p-5 ${statusResult.success ? 'bg-green-50 border border-green-100' : 'bg-red-50 text-red-600'}`}>
+              {!statusResult.success ? (
+                <p className="font-bold">{statusResult.message}</p>
               ) : (
-                <p>{status.message}</p>
+                <div>
+                  <div className="flex justify-between items-center mb-4 border-b border-green-200 pb-2">
+                    <span className="font-bold text-green-800 text-lg">
+                      {statusResult.data.status_display || statusResult.data.status}
+                    </span>
+                    <span className="text-xs bg-green-200 text-green-800 px-2 py-1 rounded">
+                      {statusResult.data.service_type}
+                    </span>
+                  </div>
+                  
+                  {/* Timeline Loop */}
+                  <div className="space-y-3">
+                     {statusResult.data.history.map((log: any, index: number) => (
+                       <div key={index} className="flex gap-3 text-sm">
+                         <div className="flex flex-col items-center">
+                           <div className="w-2 h-2 rounded-full bg-green-600 mt-1.5"></div>
+                           {index < statusResult.data.history.length - 1 && (
+                             <div className="w-px h-full bg-green-200 my-1"></div>
+                           )}
+                         </div>
+                         <div>
+                           <p className="font-medium text-green-900">{log.status}</p>
+                           <p className="text-xs text-green-600">{log.timestamp}</p>
+                         </div>
+                       </div>
+                     ))}
+                  </div>
+                </div>
               )}
             </div>
           )}
         </div>
       </div>
 
-      {/* Services List */}
-      <div className="flex-1 p-6 pt-8">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Start New Request</h3>
-        
-        <div className="grid gap-4">
-          <ServiceCard 
-            title="Vehicle License Renewal" 
-            desc="Renew your papers in 24 hours." 
-            icon="🚗" 
-            active 
-          />
-          <ServiceCard 
-            title="Driver's License" 
-            desc="New processing & renewals." 
-            icon="🪪" 
-          />
-          <ServiceCard 
-            title="Third Party Insurance" 
-            desc="Instant insurance certificate." 
-            icon="🛡️" 
-          />
-        </div>
-      </div>
-
     </main>
-  );
-}
-
-// Simple Sub-component for the buttons
-function ServiceCard({ title, desc, icon, active = false }: any) {
-  return (
-    <Link href="/create">
-      <div className={`p-4 rounded-2xl flex items-center gap-4 transition-all cursor-pointer border ${active ? 'border-blue-600 bg-blue-50' : 'border-gray-100 hover:border-blue-200 bg-white'}`}>
-        <div className="text-2xl bg-white w-12 h-12 rounded-full flex items-center justify-center shadow-sm">
-          {icon}
-        </div>
-        <div>
-          <h4 className="font-bold text-gray-800 text-sm">{title}</h4>
-          <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
-        </div>
-      </div>
-    </Link>
   );
 }
