@@ -4,14 +4,29 @@
 
 ---
 
+## 🛠️ Features
+
+- **Smart Tracker:** Live status updates for customers.
+- **Google Sheets Sync:** Every order is automatically backed up to a central spreadsheet.
+- **Auto-Notifications:** Professional HTML emails sent to clients upon status changes.
+- **Secure Handling:** Private data is kept out of the codebase using environment variables.
+
+---
+
+## 👥 Partners & Agents
+
+## Interested in partnering? Register via the /agent portal or contact us at 0805 302 2627.
+
 ## 🛠 Tech Stack
 
 **Frontend**
+
 - **Framework:** Next.js (TypeScript)
 - **Styling:** Tailwind CSS
 - **State Management:** React Context / Zustand (TBD)
 
 **Backend**
+
 - **Framework:** Python (Django REST Framework)
 - **Database:** PostgreSQL
 - **Admin:** Django Admin (Agent Dashboard)
@@ -22,18 +37,19 @@
 
 When styling components, adhere strictly to the **Paperwork Padi** design system:
 
-| Color Name | Hex Code | Usage |
-| :--- | :--- | :--- |
-| **Padi Blue** | `#0b1eee` | Primary Buttons, Headers, Links |
-| **Padi Light** | `#5561f4` | Accents, Hover States |
-| **Padi White** | `#ffffff` | Backgrounds, Cards |
-| **Surface** | `#f8f9fa` | Form Backgrounds, Inputs |
+| Color Name     | Hex Code  | Usage                           |
+| :------------- | :-------- | :------------------------------ |
+| **Padi Blue**  | `#0b1eee` | Primary Buttons, Headers, Links |
+| **Padi Light** | `#5561f4` | Accents, Hover States           |
+| **Padi White** | `#ffffff` | Backgrounds, Cards              |
+| **Surface**    | `#f8f9fa` | Form Backgrounds, Inputs        |
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Python 3.9+
 - Node.js 18+
 - PostgreSQL
@@ -41,6 +57,7 @@ When styling components, adhere strictly to the **Paperwork Padi** design system
 ### Installation
 
 **1. Clone the repository**
+
 ```bash
 git clone [https://github.com/paepar-com/web.app.git](https://github.com/paepar-com/web.app.git)
 cd web.app
@@ -77,9 +94,9 @@ We follow a strict **Feature Branch Workflow**. Direct pushes to `main` are **bl
 **1. Create a Branch**
 Do not work on main. Create a branch for your specific task:
 
-* Features: `feat/payment-gateway`
-* Bug Fixes: `fix/mobile-nav`
-* Documentation: `docs/api-schema`
+- Features: `feat/payment-gateway`
+- Bug Fixes: `fix/mobile-nav`
+- Documentation: `docs/api-schema`
 
 ```bash
 git checkout -b feat/your-feature-name
@@ -89,15 +106,15 @@ git checkout -b feat/your-feature-name
 **2. Commit Standards**
 Write clear, descriptive commit messages.
 
-* ✅ `feat: added paystack integration logic`
-* ❌ `updates`
+- ✅ `feat: added paystack integration logic`
+- ❌ `updates`
 
 **3. Submit a Pull Request (PR)**
 
-* Push your branch to origin.
-* Open a PR on GitHub comparing your branch to `main`.
-* Assign the PR to the Project Lead for review.
-* **Do not merge your own PR.** Wait for approval.
+- Push your branch to origin.
+- Open a PR on GitHub comparing your branch to `main`.
+- Assign the PR to the Project Lead for review.
+- **Do not merge your own PR.** Wait for approval.
 
 ---
 
@@ -105,4 +122,3 @@ Write clear, descriptive commit messages.
 
 **© 2025 PEAPAR.COM**
 This repository contains proprietary source code. Unauthorized copying, distribution, or use of this file, via any medium, is strictly prohibited.
-

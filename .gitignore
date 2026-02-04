@@ -1,11 +1,23 @@
-# Python / Django
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Backend (Django)
 backend/venv/
 backend/__pycache__/
+backend/*.pyc
 backend/*.sqlite3
-*.pyc
+backend/db.sqlite3
+backend/media/
+backend/staticfiles/
 
-# Node / Next.js
+# Backend Secrets (CRITICAL)
+backend/.env
+backend/credentials.json
+
+# Frontend (Next.js)
 frontend/node_modules/
 frontend/.next/
 frontend/.env.local
-.DS_Store
+frontend/out/

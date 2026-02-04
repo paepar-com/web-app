@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .wrapper { font-family: sans-serif; background-color: #f4f7f6; padding: 40px; }
+        .card { background: #ffffff; border-radius: 12px; max-width: 500px; margin: 0 auto; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .header { background: #1e3a8a; color: #ffffff; padding: 30px; text-align: center; }
+        .body { padding: 30px; color: #374151; line-height: 1.6; }
+        .ticket-box { background: #eff6ff; border: 2px dashed #3b82f6; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0; }
+        .ticket-id { font-size: 24px; font-weight: bold; color: #1e40af; letter-spacing: 2px; }
+        .footer { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 20px; }
+        .btn { display: inline-block; background: #2563eb; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="card">
+            <div class="header">
+                <h1>Paepar</h1>
+            </div>
+            <div class="body">
+                <h2>Hello {{ full_name }},</h2>
+                <p>We've received your request for <strong>{{ service_type }}</strong>. Our team is already on it!</p>
+                
+                <div class="ticket-box">
+                    <p style="margin: 0; text-transform: uppercase; font-size: 10px; font-weight: bold;">Tracking ID</p>
+                    <div class="ticket-id">{{ ticket_id }}</div>
+                </div>
+
+                <p>You can track the live progress of your application on our portal at any time.</p>
+                
+                <div style="text-align: center;">
+                    <a href="{{ site_url }}" class="btn">Track Application</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            &copy; 2026 Paepar Services Nigeria. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>
